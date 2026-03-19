@@ -1,0 +1,16 @@
+# 如果你想使用自定义域名，请在这里填写
+# 例如: www.yourdomain.com
+# 然后需要在域名注册商配置CNAME记录指向 tengfeizhao1219.github.io
+
+# 当前使用GitHub Pages默认域名:
+# https://tengfeizhao1219.github.io/Tengfei-s-Workstation/
+
+# 启用自定义域名步骤:
+# 1. 购买域名 (如: yourdomain.com)
+# 2. 在域名注册商添加CNAME记录:
+#    名称: www (或其他子域名)
+#    值: tengfeizhao1219.github.io
+# 3. 取消本行注释，填写你的域名:
+# yourdomain.com
+# 4. 提交更改到GitHub
+# 5. 在GitHub仓库 Settings → Pages 中配置自定义域名
