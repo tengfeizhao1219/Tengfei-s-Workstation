@@ -1,0 +1,46 @@
+{
+  "name": "ecommerce-ui-ux-prototype",
+  "version": "1.0.0",
+  "description": "电商网站UI/UX验证原型 - 用于在正式开发前验证设计概念和用户体验",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve .",
+    "dev": "python3 -m http.server 8000",
+    "deploy:github": "echo '请运行 ./deploy.sh 选择GitHub Pages部署'",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod",
+    "build:zip": "zip -r ecommerce-prototype.zip . -x '*.git*' 'node_modules/*' '*.zip'",
+    "test": "echo '这是一个UI/UX原型，没有自动化测试。请进行人工测试。'",
+    "lint": "echo '代码检查跳过 - 原型阶段'"
+  },
+  "keywords": [
+    "ecommerce",
+    "prototype",
+    "ui-ux",
+    "validation",
+    "design",
+    "shopping-cart",
+    "responsive"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/ecommerce-prototype.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/ecommerce-prototype/issues"
+  },
+  "homepage": "https://your-username.github.io/ecommerce-prototype/",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
