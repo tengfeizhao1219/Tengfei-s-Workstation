@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词本UI版本比较</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .version-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background: white;
+        }
+        
+        .version-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .version-card.active {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        
+        .feature-a { background: #dbeafe; color: #1e40af; }
+        .feature-b { background: #f3e8ff; color: #6b21a8; }
+        .feature-both { background: #dcfce7; color: #166534; }
+        
+        .comparison-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .btn-compare {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-compare:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- 导航栏 -->
+        <nav class="mb-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-balance-scale text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">单词本UI版本比较</h1>
+                        <p class="text-gray-600">基于"先验证后开发"的流程</p>
+                    </div>
+                </div>
+                <a href="../" class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-home mr-1"></i>返回主页
+                </a>
+            </div>
+        </nav>
+
+        <!-- 介绍 -->
+        <div class="bg-white rounded-2xl p-6 mb-8 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">🎯 比较目的</h2>
+            <p class="text-gray-700 mb-4">
+                基于"先验证后开发"的流程，我们创建了两个不同的UI版本进行验证。通过用户测试和评估，选择最佳设计方案后再进行正式开发。
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <i class="fas fa-lightbulb text-blue-600 text-2xl mb-2"></i>
+                    <h3 class="font-semibold text-gray-900">设计探索</h3>
+                    <p class="text-sm text-gray-600">探索不同的设计方向和风格</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <i class="fas fa-users text-green-600 text-2xl mb-2"></i>
+                    <h3 class="font-semibold text-gray-900">用户验证</h3>
+                    <p class="text-sm text-gray-600">通过真实用户测试验证设计</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <i class="fas fa-chart-line text-purple-600 text-2xl mb-2"></i>
+                    <h3 class="font-semibold text-gray-900">数据决策</h3>
+                    <p class="text-sm text-gray-600">基于数据选择最佳设计方案</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 版本对比 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <!-- 版本A -->
+            <div class="version-card rounded-2xl p-6 active">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-mountain text-blue-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">版本A</h3>
+                                <p class="text-blue-600 font-medium">简约现代风格</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-blue-600">简约</div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-900 mb-3">设计理念</h4>
+                    <p class="text-gray-700 mb-4">
+                        专注于学习功能，简洁清晰的界面设计，减少视觉干扰，提升学习效率。
+                    </p>
+                    <div class="flex flex-wrap">
+                        <span class="feature-badge feature-a">极简设计</span>
+                        <span class="feature-badge feature-a">专注学习</span>
+                        <span class="feature-badge feature-a">高效操作</span>
+                        <span class="feature-badge feature-a">清晰层次</span>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-900 mb-3">目标用户</h4>
+                    <ul class="text-gray-700 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-user-graduate text-blue-600 mr-2"></i>
+                            <span>学生和备考用户</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-briefcase text-blue-600 mr-2"></i>
+                            <span>需要高效学习的专业人士</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-mobile-alt text-blue-600 mr-2"></i>
+                            <span>移动端优先用户</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-900 mb-3">核心优势</h4>
+                    <ul class="text-gray-700 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                            <span>加载速度快，性能优秀</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                            <span>学习流程清晰，无干扰</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                            <span>适合长时间学习使用</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="text-center">
+                    <a href="version-a.html" 
+                       class="btn-compare inline-block w-full py-3 rounded-xl font-medium text-lg">
+                        <i class="fas fa-external-link-alt mr-2"></i>体验版本A
+                    </a>
+                </div>
+            </div>
+
+            <!-- 版本B -->
+            <div class="version-card rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-gem text-purple-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">版本B</h3>
+                                <p class="text-purple-600 font-medium">卡片丰富风格</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-bold text-purple-600">丰富</div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-900 mb-3">设计理念</h4>
+                    <p class="text-gray-700 mb-4">
+                        视觉丰富的交互体验，游戏化学习元素，让单词记忆变得有趣生动。
+                    </p>
+                    <div class="flex flex-wrap">
+                        <span class="feature-badge feature-b">视觉丰富</span>
+                        <span class="feature-badge feature-b">交互生动</span>
+                        <span class="feature-badge feature-b">游戏化</span>
+                        <span class="feature-badge feature-b">情感化设计</span>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-900 mb-3">目标用户</h4>
+                    <ul class="text-gray-700 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-gamepad text-purple-600 mr-2"></i>
+                            <span>喜欢游戏化学习的用户</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-palette text-purple-600 mr-2"></i>
+                            <span>注重视觉体验的用户</span>
+                        </li>
+                        <li class="fas fa-child text-purple-600 mr-2"></i>
+                            <span>年轻用户和初学者</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-900 mb-3">核心优势</h4>
+                    <ul class="text-gray-700 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                            <span>学习过程有趣，提升参与度</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                            <span>视觉记忆效果更好</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                            <span>适合碎片化学习场景</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="text-center">
+                    <a href="version-b.html" 
+                       class="btn-compare inline-block w-full py-3 rounded-xl font-medium text-lg">
+                        <i class="fas fa-external-link-alt mr-2"></i>体验版本B
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 详细对比表格 -->
+        <div class="bg-white rounded-2xl p-6 mb-8 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-6">📊 详细功能对比</h2>
+            
+            <div class="overflow-x-auto">
+                <table class="comparison-table w-full">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="text-left font-semibold text-gray-900 p-4">功能/特性</th>
+                            <th class="text-center font-semibold text-blue-600 p-4">版本A</th>
+                            <th class="text-center font-semibold text-purple-600 p-4">版本B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-medium text-gray-900">视觉风格</td>
+                            <td class="text-center text-blue-600">简约、清晰、专业</td>
+                            <td class="text-center text-purple-600">丰富、生动、有趣</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium text-gray-900">色彩方案</td>
+                            <td class="text-center">蓝色系，中性色为主</td>
+                            <td class="text-center">多彩渐变，情感化色彩</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium text-gray-900">交互效果</td>
+                            <td class="text-center">简洁翻转，基础动画</td>
+                            <td class="text-center">3D翻转，丰富动效</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium text-gray-900">学习模式</td>
+                            <td class="text-center">传统列表+卡片</td>
+                            <td class="text-center">游戏化+进度追踪</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium text-gray-900">性能表现</td>
+                            <td class="text-center text-green-600">⭐️⭐️⭐️⭐️⭐️ (优秀)</td>
+                            <td class="text-center text-yellow-600">⭐️⭐️⭐️⭐️ (良好)</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium text-gray-900">学习效率</td>
+                            <td class="text-center text-green-600">专注高效</td>
+                            <td class="text-center text-green-600">有趣持久</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium text-gray-900">适用场景</td>
+                            <td class="text-center">长时间系统学习</td>
+                            <td class="text-center">碎片化趣味学习</td>
+                        </tr>
+                        <tr>
+                            <td class="font-medium text-gray-900">技术实现</td>
+                            <td class="text-center">简单，维护成本低</td>
+                            <td class="text-center">复杂，维护成本较高</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 验证流程 -->
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 text-white mb-8">
+            <h2 class="text-2xl font-bold mb-6">🔍 验证流程指南</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="text-2xl font-bold">1</div>
+                    </div>
+                    <h3 class="font-semibold mb-2">体验两个版本</h3>
+                    <p class="text-blue-100 text-sm">分别使用版本A和版本B</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="text-2xl font-bold">2</div>
+                    </div>
+                    <h3 class="font-semibold mb-2">使用验证工具</h3>
+                    <p class="text-blue-100 text-sm">下载UI评估检查表</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="text-2xl font-bold">3</div>
+                    </div>
+                    <h3 class="font-semibold mb-2">进行用户测试</h3>
+                    <p class="text-blue-100 text-sm">招募3-5名用户测试</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div class="text-2xl font-bold">4</div>
+                    </div>
+                    <h3 class="font-semibold mb-2">分析决策</h3>
+                    <p class="text-blue-100 text-sm">基于数据选择最佳方案</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <a href="../projects/ui-validation-tools/" 
+                   class="inline-block bg-white text-blue-600 px-8 py-3 rounded-xl font-medium hover:bg-gray-100">
+                    <i class="fas fa-tools mr-2"></i>打开验证工具
+                </a>
+            </div>
+        </div>
+
+        <!-- 行动指南 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-6">🚀 立即开始验证</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <h3 class="font-semibold text-gray-900 mb-3">第一步：体验版本</h3>
+                    <div class="space-y-3">
+                        <a href="version-a.html" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas fa-mountain text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-900">版本A - 简约现代</div>
+                                    <div class="text-sm text-gray-600">专注于学习效率</div>
+                                </div>
+                                <i class="fas fa-arrow-right ml-auto text-blue-600"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="version-b.html" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas fa-gem text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-900">版本B - 卡片丰富</div>
+                                    <div class="text-sm text-gray-600">视觉丰富的体验</div>
+                                </div>
+                                <i class="fas fa-arrow-right ml-auto text-purple-600"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="border-l-4 border-green-500 pl-4">
+                    <h3 class="font-semibold text-gray-900 mb-3">第二步：使用工具</h3>
+                    <div class="space-y-3">
+                        <a href="../projects/ui-validation-tools/ui-evaluation-checklist.md" 
+                           class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas fa-clipboard-check text-green-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-900">UI评估检查表</div>
+                                    <div class="text-sm text-gray-600">10维度专业评估</div>
+                                </div>
+                                <i class="fas fa-download ml-auto text-green-600"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="../projects/ui-validation-tools/user-testing-script.md" 
+                           class="block p-4 bg-orange-50 rounded-lg hover:bg-orange-100 transition">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas fa-users text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-900">用户测试脚本</div>
+                                    <div class="text-sm text-gray-600">标准化测试流程</div>
+                                </div>
+                                <i class="fas fa-download ml-auto text-orange-600"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+                <h4 class="font-semibold text-gray-900 mb-2">💡 验证建议</h4>
+                <ul class="text-gray-700 space-y-2 text-sm">
+                    <li class="flex items-start">
+                        <i class="fas fa-lightbulb text-yellow-600 mt-1 mr-2"></i>
+                        <span>先内部评估，再用户测试</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-lightbulb text-yellow-600 mt-1 mr-2"></i>
+                        <span>每个版本测试3-5名真实用户</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-lightbulb text-yellow-600 mt-1 mr-2"></i>
+                        <span>记录任务完成时间和错误率</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-lightbulb text-yellow-600 mt-1 mr-2"></i>
+                        <span>收集用户主观反馈和偏好</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="mt-12 pt-8 border-t border-gray-200">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-balance-scale text-white"></i>
+                        </div>
+                        <span class="text-lg font-bold text-gray-900">UI版本比较</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">基于"先验证后开发"的专业流程</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="../" class="text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-home mr-1"></i>主页
+                    </a>
+                    <a href="../projects/ui-validation-tools/" class="text-green-600 hover:text-green-700">
+                        <i class="fas fa-tools mr-1"></i>验证工具
+                    </a>
+                    <a href="https://github.com/tengfeizhao1219/Tengfei-s-Workstation" class="text-gray-600 hover:text-gray-800">
+                        <i class="fab fa-github mr-1"></i>源代码
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center text-gray-500 text-sm mt-8">
+                <p>© 2026 Tengfei's Workstation - UI验证原型系统</p>
+                <p class="mt-1">降低开发风险，提高产品质量</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 版本卡片点击效果
+            const versionCards = document.querySelectorAll('.version-card');
+            versionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    versionCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 链接点击效果
+            const links = document.querySelectorAll('a[href^="version-"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const card = this.closest('.version-card');
+                    if (card) {
+                        versionCards.forEach(c => c.classList.remove('active'));
+                        card.classList.add('active');
+                    }
+                });
+            });
+            
+            // 动画效果
+            const elements = document.querySelectorAll('.version-card, .comparison-table tr');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

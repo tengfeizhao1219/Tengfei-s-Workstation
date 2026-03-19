@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词本 - 版本B (卡片丰富)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #f59e0b;
+            --accent: #10b981;
+            --bg-gradient: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 100%);
+            --card-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.1), 0 10px 10px -5px rgba(139, 92, 246, 0.04);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-gradient);
+            color: #1f2937;
+        }
+        
+        .word-card-rich {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f3f4f6;
+        }
+        
+        .word-card-rich:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--card-shadow);
+            border-color: var(--primary);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            padding: 20px;
+        }
+        
+        .difficulty-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        
+        .difficulty-easy { background: #10b981; }
+        .difficulty-medium { background: #f59e0b; }
+        .difficulty-hard { background: #ef4444; }
+        
+        .btn-glow {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .tag-rich {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd6fe;
+        }
+        
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 75%, #e5e7eb 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .progress-circle-inner {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .flip-card-3d {
+            perspective: 1500px;
+        }
+        
+        .flip-card-3d-inner {
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .flip-card-3d.flipped .flip-card-3d-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-3d-front, .flip-card-3d-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        
+        .flip-card-3d-back {
+            transform: rotateY(180deg);
+        }
+        
+        /* 动画效果 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.6); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .word-grid-rich {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .card-header {
+                padding: 16px;
+            }
+        }
+        
+        /* 装饰元素 */
+        .decoration-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .wave-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.1) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="bg-white/80 backdrop-blur-md border-b border-purple-100 shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-book-open text-white text-lg"></i>
+                        </div>
+                        <div class="decoration-dot top-0 right-0"></div>
+                        <div class="decoration-dot bottom-0 left-0"></div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">单词记忆库</h1>
+                        <p class="text-xs text-purple-600 font-medium">版本B - 卡片丰富风格</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="../" class="text-gray-600 hover:text-purple-600 transition">
+                        <i class="fas fa-home mr-1"></i>主页
+                    </a>
+                    <a href="version-a.html" class="text-gray-600 hover:text-purple-600 transition">
+                        <i class="fas fa-exchange-alt mr-1"></i>切换版本A
+                    </a>
+                    <a href="../projects/ui-validation-tools/" class="text-green-600 hover:text-green-700 font-medium">
+                        <i class="fas fa-clipboard-check mr-1"></i>验证工具
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 页面标题和统计 -->
+        <div class="mb-10">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div class="flex-1">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">探索单词世界</h2>
+                    <p class="text-gray-600">视觉丰富的学习体验，让记忆更有趣</p>
+                    
+                    <!-- 标签筛选 -->
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <button class="tag-rich active">
+                            <i class="fas fa-star mr-1"></i>全部单词
+                        </button>
+                        <button class="tag-rich">
+                            <i class="fas fa-bolt mr-1"></i>高频词汇
+                        </button>
+                        <button class="tag-rich">
+                            <i class="fas fa-graduation-cap mr-1"></i>考试必备
+                        </button>
+                        <button class="tag-rich">
+                            <i class="fas fa-briefcase mr-1"></i>商务英语
+                        </button>
+                        <button class="tag-rich">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-1">42</div>
+                        <div class="text-sm text-gray-500">单词总数</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="progress-circle float-animation">
+                            <div class="progress-circle-inner">
+                                67%
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-500 mt-2">掌握率</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600 mb-1">28</div>
+                        <div class="text-sm text-gray-500">已掌握</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作栏 -->
+        <div class="bg-white rounded-2xl p-6 mb-8 shadow-xl wave-pattern">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                <div class="flex-1">
+                    <div class="relative">
+                        <input type="text" 
+                               placeholder="🔍 搜索单词、释义或标签..." 
+                               class="w-full px-6 py-4 pl-12 border-2 border-purple-100 rounded-2xl focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-100 text-lg">
+                        <i class="fas fa-search absolute left-4 top-5 text-purple-400"></i>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative group">
+                        <button class="px-5 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium flex items-center">
+                            <i class="fas fa-plus mr-2"></i>添加单词
+                        </button>
+                        <div class="absolute hidden group-hover:block bg-white p-2 rounded-lg shadow-lg mt-2 z-10">
+                            <div class="text-sm text-gray-700">快速添加新单词</div>
+                        </div>
+                    </div>
+                    
+                    <button class="px-5 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 text-white rounded-xl font-medium flex items-center">
+                        <i class="fas fa-play mr-2"></i>开始学习
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 快速筛选 -->
+            <div class="flex flex-wrap gap-3 mt-6">
+                <div class="flex items-center">
+                    <span class="text-gray-600 mr-2">难度:</span>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm flex items-center">
+                            <span class="difficulty-dot difficulty-easy"></span>简单
+                        </button>
+                        <button class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm flex items-center">
+                            <span class="difficulty-dot difficulty-medium"></span>中等
+                        </button>
+                        <button class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm flex items-center">
+                            <span class="difficulty-dot difficulty-hard"></span>困难
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center">
+                    <span class="text-gray-600 mr-2">状态:</span>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">未学习</button>
+                        <button class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">学习中</button>
+                        <button class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">已掌握</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学习模式切换 -->
+        <div class="mb-8">
+            <div class="flex overflow-x-auto pb-2 space-x-1">
+                <button class="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl font-medium flex items-center whitespace-nowrap">
+                    <i class="fas fa-layer-group mr-2"></i>单词卡片
+                </button>
+                <button class="px-6 py-3 bg-white text-purple-600 border-2 border-purple-200 rounded-xl font-medium flex items-center hover:bg-purple-50 whitespace-nowrap">
+                    <i class="fas fa-gamepad mr-2"></i>游戏学习
+                </button>
+                <button class="px-6 py-3 bg-white text-purple-600 border-2 border-purple-200 rounded-xl font-medium flex items-center hover:bg-purple-50 whitespace-nowrap">
+                    <i class="fas fa-chart-line mr-2"></i>进度追踪
+                </button>
+                <button class="px-6 py-3 bg-white text-purple-600 border-2 border-purple-200 rounded-xl font-medium flex items-center hover:bg-purple-50 whitespace-nowrap">
+                    <i class="fas fa-users mr-2"></i>社区挑战
+                </button>
+            </div>
+        </div>
+
+        <!-- 单词网格 -->
+        <div class="word-grid-rich grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 单词卡片1 -->
+            <div class="word-card-rich pulse-glow">
+                <div class="card-header">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-1">Serendipity</h3>
+                            <p class="text-purple-200">/ˌser.ənˈdɪp.ə.ti/</p>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="difficulty-dot difficulty-medium mr-1"></span>
+                            <span class="text-sm text-yellow-200">中等</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <div class="mb-4">
+                        <div class="text-sm text-gray-500 mb-2">释义</div>
+                        <p class="text-gray-800 text-lg">意外发现珍奇事物的本领；机缘巧合</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="text-sm text-gray-500 mb-2">例句</div>
+                        <p class="text-gray-700 italic bg-purple-50 p-3 rounded-lg">
+                            "Finding this old photo was pure serendipity."
+                        </p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="text-sm text-gray-500 mb-2">标签</div>
+                        <div>
+                            <span class="tag-rich">
+                                <i class="fas fa-hashtag mr-1"></i>名词
+                            </span>
+                            <span class="tag-rich">
+                                <i class="fas fa-star mr-1"></i>高级词汇
+                            </span>
+                            <span class="tag-rich">
+                                <i class="fas fa-heart mr-1"></i>生活
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">
+                            <i class="far fa-clock mr-1"></i>3天前添加
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center hover:bg-green-200">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center hover:

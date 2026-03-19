@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词本 - 版本A (简约现代)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #10b981;
+            --accent: #8b5cf6;
+            --bg-light: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+        
+        .word-card {
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            background: white;
+        }
+        
+        .word-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary);
+        }
+        
+        .difficulty-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .difficulty-easy { background: #d1fae5; color: #065f46; }
+        .difficulty-medium { background: #fef3c7; color: #92400e; }
+        .difficulty-hard { background: #fee2e2; color: #991b1b; }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #0d9668;
+            transform: translateY(-1px);
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .flip-card {
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #f1f5f9;
+            color: var(--text-secondary);
+            border-radius: 12px;
+            font-size: 12px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+        
+        /* 学习模式特殊样式 */
+        .learning-mode {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .test-mode {
+            background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .word-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm border-b border-gray-100">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-book-open text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-gray-900">单词本</h1>
+                        <p class="text-xs text-gray-500">版本A - 简约现代风格</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="../" class="text-gray-600 hover:text-blue-600 text-sm">
+                        <i class="fas fa-home mr-1"></i>主页
+                    </a>
+                    <a href="version-b.html" class="text-gray-600 hover:text-blue-600 text-sm">
+                        <i class="fas fa-exchange-alt mr-1"></i>切换版本B
+                    </a>
+                    <a href="../projects/ui-validation-tools/" class="text-green-600 hover:text-green-700 text-sm">
+                        <i class="fas fa-clipboard-check mr-1"></i>验证工具
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 页面标题和统计 -->
+        <div class="mb-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">我的单词库</h2>
+                    <p class="text-gray-600 mt-1">简约设计，专注学习</p>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600">42</div>
+                        <div class="text-xs text-gray-500">总单词数</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600">28</div>
+                        <div class="text-xs text-gray-500">已掌握</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-orange-600">67%</div>
+                        <div class="text-xs text-gray-500">掌握率</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 进度条 -->
+            <div class="mt-4">
+                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                    <span>学习进度</span>
+                    <span>67%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 67%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作栏 -->
+        <div class="bg-white rounded-xl p-4 mb-6 shadow-sm">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex-1">
+                    <div class="relative">
+                        <input type="text" 
+                               placeholder="搜索单词或释义..." 
+                               class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <select class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option>全部难度</option>
+                        <option>简单</option>
+                        <option>中等</option>
+                        <option>困难</option>
+                    </select>
+                    
+                    <select class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                        <option>最近添加</option>
+                        <option>按字母排序</option>
+                        <option>按难度排序</option>
+                        <option>按掌握程度</option>
+                    </select>
+                    
+                    <button class="btn-primary px-4 py-2 rounded-lg text-sm">
+                        <i class="fas fa-plus mr-1"></i>添加单词
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学习模式切换 -->
+        <div class="mb-6">
+            <div class="flex border-b border-gray-200">
+                <button class="px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-medium">
+                    <i class="fas fa-list mr-2"></i>单词列表
+                </button>
+                <button class="px-4 py-2 text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-graduation-cap mr-2"></i>学习模式
+                </button>
+                <button class="px-4 py-2 text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-clipboard-check mr-2"></i>测试模式
+                </button>
+                <button class="px-4 py-2 text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-chart-line mr-2"></i>学习统计
+                </button>
+            </div>
+        </div>
+
+        <!-- 单词网格 -->
+        <div class="word-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- 单词卡片1 -->
+            <div class="word-card rounded-xl p-5 fade-in">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Serendipity</h3>
+                        <p class="text-sm text-gray-500">/ˌser.ənˈdɪp.ə.ti/</p>
+                    </div>
+                    <span class="difficulty-badge difficulty-medium">中等</span>
+                </div>
+                
+                <p class="text-gray-700 mb-4">意外发现珍奇事物的本领；机缘巧合</p>
+                
+                <div class="mb-4">
+                    <div class="text-xs text-gray-500 mb-1">例句:</div>
+                    <p class="text-sm text-gray-700 italic">"Finding this old photo was pure serendipity."</p>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs text-gray-500 mb-1">标签:</div>
+                    <div>
+                        <span class="tag">名词</span>
+                        <span class="tag">高级词汇</span>
+                        <span class="tag">生活</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-xs text-gray-500">
+                        添加: 3天前
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="text-blue-600 hover:text-blue-800">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-green-600 hover:text-green-800">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="text-red-600 hover:text-red-800">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 单词卡片2 (可翻转) -->
+            <div class="word-card rounded-xl p-5 fade-in flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Ephemeral</h3>
+                                <p class="text-sm text-gray-500">/ɪˈfem.ər.əl/</p>
+                            </div>
+                            <span class="difficulty-badge difficulty-hard">困难</span>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-4">点击卡片查看释义 →</p>
+                        
+                        <div class="text-center py-4">
+                            <i class="fas fa-sync-alt text-2xl text-blue-600 opacity-50"></i>
+                            <p class="text-xs text-gray-500 mt-2">点击翻转</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-card-back">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Ephemeral</h3>
+                                <p class="text-sm text-gray-500">短暂的，瞬息的</p>
+                            </div>
+                            <span class="difficulty-badge difficulty-hard">困难</span>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-4">形容事物存在时间极短，转瞬即逝</p>
+                        
+                        <div class="mb-4">
+                            <div class="text-xs text-gray-500 mb-1">例句:</div>
+                            <p class="text-sm text-gray-700 italic">"The beauty of cherry blossoms is ephemeral."</p>
+                        </div>
+                        
+                        <div class="text-center py-2">
+                            <p class="text-xs text-gray-500">再次点击返回</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 单词卡片3 -->
+            <div class="word-card rounded-xl p-5 fade-in">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Ubiquitous</h3>
+                        <p class="text-sm text-gray-500">/juːˈbɪk.wɪ.təs/</p>
+                    </div>
+                    <span class="difficulty-badge difficulty-medium">中等</span>
+                </div>
+                
+                <p class="text-gray-700 mb-4">无所不在的，普遍存在的</p>
+                
+                <div class="mb-4">
+                    <div class="text-xs text-gray-500 mb-1">例句:</div>
+                    <p class="text-sm text-gray-700 italic">"Smartphones have become ubiquitous in modern life."</p>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs text-gray-500 mb-1">掌握程度:</div>
+                    <div class="flex items-center">
+                        <div class="flex-1 progress-bar mr-2">
+                            <div class="progress-fill" style="width: 80%"></div>
+                        </div>
+                        <span class="text-xs text-gray-600">80%</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-xs text-gray-500">
+                        复习: 明天
+                    </div>
+                    <button class="text-blue-600 hover:text-blue-800 text-sm">
+                        <i class="fas fa-redo mr-1"></i>复习
+                    </button>
+                </div>
+            </div>
+
+            <!-- 单词卡片4 -->
+            <div class="word-card rounded-xl p-5 fade-in">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Melancholy</h3>
+                        <p class="text-sm text-gray-500">/ˈmel.ən.kɒl.i/</p>
+                    </div>
+                    <span class="difficulty-badge difficulty-medium">中等</span>
+                </div>
+                
+                <p class="text-gray-700 mb-4">忧郁，悲伤；忧郁的</p>
+                
+                <div class="mb-4">
+                    <div class="text-xs text-gray-500 mb-1">同义词:</div>
+                    <p class="text-sm text-gray-700">sadness, gloom, sorrow</p>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-xs text-gray-500 mb-1">标签:</div>
+                    <div>
+                        <span class="tag">形容词</span>
+                        <span class="tag">名词</span>
+                        <span class="tag">情感</span>
+                        <span class="tag">文学</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="text-xs text-gray-500">
+                        已掌握
+                    </div>
+                    <div class="flex items-center text-green-600">
+                        <i class="fas fa-check-circle mr-
