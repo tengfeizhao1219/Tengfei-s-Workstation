@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI验证工具 - Tengfei's Workstation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            background: white;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .badge {
+            background-color: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- 导航栏 -->
+        <nav class="mb-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-tools text-white"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900">UI验证工具</h1>
+                </div>
+                <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/" class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-home mr-1"></i>返回主页
+                </a>
+            </div>
+            <p class="text-gray-600 mt-2">专业UI/UX验证工具和模板</p>
+        </nav>
+
+        <!-- 工具介绍 -->
+        <div class="bg-white rounded-xl p-6 mb-8 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">工具概述</h2>
+            <p class="text-gray-700 mb-4">
+                这套专业工具帮助你在正式开发前系统化验证UI/UX设计，降低开发风险，提高产品质量。
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <i class="fas fa-clipboard-check text-blue-600 text-2xl mb-2"></i>
+                    <h3 class="font-semibold text-gray-900">系统化评估</h3>
+                    <p class="text-sm text-gray-600">10维度专业评估框架</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg">
+                    <i class="fas fa-users text-green-600 text-2xl mb-2"></i>
+                    <h3 class="font-semibold text-gray-900">标准化测试</h3>
+                    <p class="text-sm text-gray-600">可重复的用户测试流程</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <i class="fas fa-chart-line text-purple-600 text-2xl mb-2"></i>
+                    <h3 class="font-semibold text-gray-900">数据驱动</h3>
+                    <p class="text-sm text-gray-600">基于数据的优化决策</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 工具卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- UI评估检查表 -->
+            <div class="card rounded-xl p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-list-check text-blue-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">UI评估检查表</h3>
+                        </div>
+                        <span class="badge inline-block">专业工具</span>
+                    </div>
+                    <div class="text-3xl text-blue-600 font-bold">10维</div>
+                </div>
+                
+                <p class="text-gray-600 mb-4">
+                    10维度专业评估框架，系统化评估UI设计质量。每个维度评分0-10分，提供量化评估结果。
+                </p>
+                
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-900 mb-2">评估维度:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">视觉层次</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">排版系统</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">色彩系统</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">间距节奏</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">一致性</span>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-sm text-gray-500">文件格式: Markdown</span>
+                        <span class="text-sm text-gray-500 ml-4">大小: 9KB</span>
+                    </div>
+                    <a href="ui-evaluation-checklist.md" 
+                       class="btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center">
+                        <i class="fas fa-download mr-2"></i>下载工具
+                    </a>
+                </div>
+            </div>
+
+            <!-- 用户测试脚本 -->
+            <div class="card rounded-xl p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-user-check text-green-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">用户测试脚本</h3>
+                        </div>
+                        <span class="badge inline-block">标准化</span>
+                    </div>
+                    <div class="text-3xl text-green-600 font-bold">5步</div>
+                </div>
+                
+                <p class="text-gray-600 mb-4">
+                    标准化用户测试流程，包含测试准备、任务设计、数据记录、分析报告完整流程。
+                </p>
+                
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-900 mb-2">测试流程:</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-2 text-sm">1</div>
+                            <span class="text-sm">测试准备和用户招募</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-2 text-sm">2</div>
+                            <span class="text-sm">任务设计和脚本编写</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center mr-2 text-sm">3</div>
+                            <span class="text-sm">测试执行和数据记录</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-sm text-gray-500">文件格式: Markdown</span>
+                        <span class="text-sm text-gray-500 ml-4">大小: 10KB</span>
+                    </div>
+                    <a href="user-testing-script.md" 
+                       class="btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center">
+                        <i class="fas fa-download mr-2"></i>下载工具
+                    </a>
+                </div>
+            </div>
+
+            <!-- 验证报告模板 -->
+            <div class="card rounded-xl p-6 md:col-span-2">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <div class="flex items-center mb-2">
+                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-file-alt text-purple-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">验证报告模板</h3>
+                        </div>
+                        <span class="badge inline-block">专业报告</span>
+                    </div>
+                    <div class="text-3xl text-purple-600 font-bold">完整</div>
+                </div>
+                
+                <p class="text-gray-600 mb-4">
+                    专业验证报告模板，包含执行摘要、测试结果、关键发现、改进建议、行动计划完整结构。
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-900 mb-2">报告结构</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 执行摘要</li>
+                            <li>• 测试结果概览</li>
+                            <li>• 关键发现</li>
+                            <li>• 改进建议</li>
+                            <li>• 行动计划</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-900 mb-2">评估指标</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 任务完成率</li>
+                            <li>• 平均任务时间</li>
+                            <li>• 错误发生率</li>
+                            <li>• SUS评分</li>
+                            <li>• 用户满意度</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-900 mb-2">优先级排序</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• 高优先级问题</li>
+                            <li>• 中优先级问题</li>
+                            <li>• 低优先级问题</li>
+                            <li>• 立即行动项</li>
+                            <li>• 长期优化项</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-sm text-gray-500">文件位置: /projects/ecommerce-prototype/</span>
+                        <span class="text-sm text-gray-500 ml-4">大小: 6KB</span>
+                    </div>
+                    <a href="../ecommerce-prototype/validation-report-template.md" 
+                       class="btn-primary px-6 py-2 rounded-lg font-medium inline-flex items-center">
+                        <i class="fas fa-download mr-2"></i>下载模板
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 使用指南 -->
+        <div class="bg-white rounded-xl p-6 mt-8 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">使用指南</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <h3 class="font-semibold text-gray-900 mb-2">1. 下载工具</h3>
+                    <p class="text-sm text-gray-600">点击上方按钮下载对应的Markdown文件</p>
+                </div>
+                
+                <div class="border-l-4 border-green-500 pl-4">
+                    <h3 class="font-semibold text-gray-900 mb-2">2. 进行评估</h3>
+                    <p class="text-sm text-gray-600">使用模板进行系统化UI评估或用户测试</p>
+                </div>
+                
+                <div class="border-l-4 border-purple-500 pl-4">
+                    <h3 class="font-semibold text-gray-900 mb-2">3. 生成报告</h3>
+                    <p class="text-sm text-gray-600">基于评估结果生成专业验证报告</p>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h4 class="font-semibold text-gray-900 mb-2">💡 专业提示</h4>
+                <p class="text-sm text-gray-700">
+                    建议先使用UI评估检查表进行内部评估，修复明显问题后再进行用户测试。
+                    用户测试建议招募3-5名目标用户，测试时间控制在45-60分钟。
+                </p>
+            </div>
+        </div>
+
+        <!-- 快速链接 -->
+        <div class="mt-8 flex flex-wrap gap-4">
+            <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/" 
+               class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 inline-flex items-center">
+                <i class="fas fa-shopping-cart mr-2"></i>电商原型
+            </a>
+            <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/wordbook/" 
+               class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 inline-flex items-center">
+                <i class="fas fa-book mr-2"></i>单词本
+            </a>
+            <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/docs/deployment-guides/github-pages-deployment-guide.md" 
+               class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 inline-flex items-center">
+                <i class="fas fa-rocket mr-2"></i>部署指南
+            </a>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="mt-12 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+            <p>UI验证工具 - Tengfei's Workstation</p>
+            <p class="mt-2">专业UI/UX验证工具，降低开发风险，提高产品质量</p>
+            <p class="mt-2">
+                <a href="https://github.com/tengfeizhao1219/Tengfei-s-Workstation" 
+                   class="text-blue-600 hover:text-blue-800">
+                    <i class="fab fa-github mr-1"></i>GitHub仓库
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 卡片动画
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // 下载按钮点击效果
+            const downloadButtons = document.querySelectorAll('a[href$=".md"]');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const button = this;
+                    const originalText = button.innerHTML;
+                    
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>下载中...';
+                    button.classList.add('opacity-75');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.classList.remove('opacity-75');
+                        
+                        // 显示下载成功提示
+                        const toolName = button.closest('.card').querySelector('h3').textContent;
+                        alert(`✅ ${toolName} 下载完成！\n\n文件将直接在浏览器中打开

@@ -3,47 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>电商网站UI/UX原型 - 设计验证</title>
+    <title>电商原型项目 - Tengfei's Workstation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 自定义样式 */
-        :root {
-            --primary: #3b82f6;
-            --secondary: #10b981;
-            --accent: #8b5cf6;
-            --neutral-50: #f9fafb;
-            --neutral-900: #111827;
-        }
-        
-        .product-card {
-            transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: var(--primary);
-        }
-        
-        .cart-item {
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            min-height: 100vh;
         }
         
         .btn-primary {
-            background-color: var(--primary);
+            background-color: #3b82f6;
             color: white;
             transition: all 0.2s ease;
         }
@@ -53,766 +24,303 @@
             transform: translateY(-1px);
         }
         
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-            transition: all 0.2s ease;
+        .feature-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            background: white;
         }
         
-        .btn-secondary:hover {
-            background-color: #0d9668;
-            transform: translateY(-1px);
-        }
-        
-        .badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: var(--accent);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .product-grid {
-                grid-template-columns: 1fr !important;
-            }
-        }
-        
-        /* 加载动画 */
-        .loading-spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* 表单样式 */
-        .form-input {
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            padding: 10px 12px;
-            transition: all 0.2s ease;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-        
-        /* 模态框 */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- 导航栏 -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3">
+<body class="p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- 导航栏 -->
+        <nav class="mb-8">
             <div class="flex items-center justify-between">
-                <!-- Logo -->
                 <div class="flex items-center space-x-2">
                     <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-shopping-bag text-white"></i>
+                        <i class="fas fa-shopping-cart text-white"></i>
                     </div>
-                    <span class="text-xl font-bold text-gray-900">ShopDemo</span>
+                    <h1 class="text-2xl font-bold text-gray-900">电商原型项目</h1>
                 </div>
-                
-                <!-- 搜索框 -->
-                <div class="hidden md:flex flex-1 max-w-md mx-8">
-                    <div class="relative w-full">
-                        <input 
-                            type="text" 
-                            placeholder="搜索商品..." 
-                            class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            id="searchInput"
-                        >
-                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-                    </div>
-                </div>
-                
-                <!-- 导航菜单 -->
-                <div class="flex items-center space-x-6">
-                    <a href="#home" class="text-gray-700 hover:text-blue-600 transition">首页</a>
-                    <a href="#products" class="text-gray-700 hover:text-blue-600 transition">商品</a>
-                    <a href="#categories" class="text-gray-700 hover:text-blue-600 transition">分类</a>
-                    
-                    <!-- 购物车图标 -->
-                    <div class="relative">
-                        <button id="cartButton" class="text-gray-700 hover:text-blue-600 transition">
-                            <i class="fas fa-shopping-cart text-xl"></i>
-                            <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-                        </button>
-                    </div>
-                    
-                    <!-- 用户图标 -->
-                    <button class="text-gray-700 hover:text-blue-600 transition">
-                        <i class="fas fa-user text-xl"></i>
-                    </button>
+                <div class="flex space-x-4">
+                    <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/" 
+                       class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-home mr-1"></i>返回主页
+                    </a>
+                    <a href="../ui-validation-tools/" 
+                       class="text-green-600 hover:text-green-800">
+                        <i class="fas fa-tools mr-1"></i>UI验证工具
+                    </a>
                 </div>
             </div>
+            <p class="text-gray-600 mt-2">完整的电商网站UI/UX验证原型</p>
+        </nav>
+
+        <!-- 项目介绍 -->
+        <div class="bg-white rounded-xl p-6 mb-8 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">项目概述</h2>
+            <p class="text-gray-700 mb-4">
+                这是一个完整的电商网站UI/UX验证原型，用于在正式开发前验证设计概念、用户流程和交互体验。
+            </p>
             
-            <!-- 移动端搜索 -->
-            <div class="mt-3 md:hidden">
-                <div class="relative">
-                    <input 
-                        type="text" 
-                        placeholder="搜索商品..." 
-                        class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-blue-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-blue-600 mb-1">1600+</div>
+                    <div class="text-sm text-gray-600">行代码</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-green-600 mb-1">8</div>
+                    <div class="text-sm text-gray-600">个示例商品</div>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-purple-600 mb-1">4</div>
+                    <div class="text-sm text-gray-600">个核心页面</div>
+                </div>
+                <div class="bg-orange-50 p-4 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-orange-600 mb-1">3</div>
+                    <div class="text-sm text-gray-600">种设备适配</div>
                 </div>
             </div>
         </div>
-    </nav>
 
-    <!-- 主要内容 -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- 首页横幅 -->
-        <section id="home" class="mb-12">
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 md:p-12 text-white">
-                <div class="max-w-2xl">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">发现精彩商品</h1>
-                    <p class="text-xl mb-8 opacity-90">高品质商品，优惠价格，快速配送</p>
-                    <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:-translate-y-1">
-                        立即购物 <i class="fas fa-arrow-right ml-2"></i>
-                    </button>
+        <!-- 主要行动 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- 访问原型 -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-external-link-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">访问电商原型</h3>
+                        <p class="text-blue-100">体验完整购物流程</p>
+                    </div>
                 </div>
+                <p class="mb-6 text-blue-100">
+                    直接访问电商原型主页面，体验从浏览商品到完成结账的完整流程。
+                </p>
+                <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/" 
+                   class="btn-primary inline-block px-6 py-3 rounded-lg font-medium bg-white text-blue-600 hover:bg-gray-100">
+                    <i class="fas fa-rocket mr-2"></i>立即访问电商原型
+                </a>
             </div>
-        </section>
 
-        <!-- 商品分类 -->
-        <section id="categories" class="mb-12">
-            <h2 class="text-2xl font-bold mb-6 text-gray-900">热门分类</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-laptop text-blue-600 text-2xl"></i>
+            <!-- 验证工具 -->
+            <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 text-white">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-clipboard-check text-2xl"></i>
                     </div>
-                    <h3 class="font-semibold text-gray-900">电子产品</h3>
-                    <p class="text-sm text-gray-600 mt-1">手机、电脑、配件</p>
-                </div>
-                
-                <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-tshirt text-green-600 text-2xl"></i>
+                    <div>
+                        <h3 class="text-xl font-bold">使用验证工具</h3>
+                        <p class="text-green-100">专业UI/UX评估</p>
                     </div>
-                    <h3 class="font-semibold text-gray-900">服装鞋帽</h3>
-                    <p class="text-sm text-gray-600 mt-1">时尚服饰、鞋类</p>
                 </div>
-                
-                <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
-                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-home text-yellow-600 text-2xl"></i>
-                    </div>
-                    <h3 class="font-semibold text-gray-900">家居用品</h3>
-                    <p class="text-sm text-gray-600 mt-1">家具、装饰、厨具</p>
-                </div>
-                
-                <div class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition cursor-pointer">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-book text-purple-600 text-2xl"></i>
-                    </div>
-                    <h3 class="font-semibold text-gray-900">图书文具</h3>
-                    <p class="text-sm text-gray-600 mt-1">书籍、文具、办公</p>
-                </div>
+                <p class="mb-6 text-green-100">
+                    使用专业工具对电商原型进行系统化评估，发现改进机会。
+                </p>
+                <a href="../ui-validation-tools/" 
+                   class="btn-primary inline-block px-6 py-3 rounded-lg font-medium bg-white text-green-600 hover:bg-gray-100">
+                    <i class="fas fa-tools mr-2"></i>打开UI验证工具
+                </a>
             </div>
-        </section>
+        </div>
 
-        <!-- 商品列表 -->
-        <section id="products" class="mb-12">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">推荐商品</h2>
-                <div class="flex space-x-2">
-                    <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">全部</button>
-                    <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">热门</button>
-                    <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">新品</button>
-                </div>
-            </div>
+        <!-- 功能特性 -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">功能特性</h2>
             
-            <!-- 商品网格 -->
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- 商品将通过JavaScript动态生成 -->
-            </div>
-        </section>
-
-        <!-- 购物车侧边栏（模态框） -->
-        <div id="cartModal" class="modal-overlay hidden">
-            <div class="modal-content p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold text-gray-900">购物车</h3>
-                    <button id="closeCart" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="feature-card rounded-xl p-5">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-search text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">实时搜索</h3>
+                    <p class="text-sm text-gray-600">即时过滤商品，快速找到目标</p>
                 </div>
                 
-                <div id="cartItems" class="mb-6">
-                    <!-- 购物车商品将动态生成 -->
-                    <div id="emptyCart" class="text-center py-12">
-                        <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
-                        <p class="text-gray-500">购物车是空的</p>
-                        <p class="text-sm text-gray-400 mt-2">添加一些商品开始购物吧</p>
+                <div class="feature-card rounded-xl p-5">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-shopping-cart text-green-600"></i>
                     </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">购物车管理</h3>
+                    <p class="text-sm text-gray-600">添加/删除/修改数量，实时计算</p>
                 </div>
                 
-                <div class="border-t pt-4">
-                    <div class="flex justify-between mb-4">
-                        <span class="text-gray-700">商品总计</span>
-                        <span id="cartTotal" class="font-semibold">¥0.00</span>
+                <div class="feature-card rounded-xl p-5">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-mobile-alt text-purple-600"></i>
                     </div>
-                    <div class="flex justify-between mb-6">
-                        <span class="text-gray-700">运费</span>
-                        <span class="font-semibold">¥0.00</span>
+                    <h3 class="font-semibold text-gray-900 mb-2">响应式设计</h3>
+                    <p class="text-sm text-gray-600">完美适配手机、平板、电脑</p>
+                </div>
+                
+                <div class="feature-card rounded-xl p-5">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mb-3">
+                        <i class="fas fa-credit-card text-orange-600"></i>
                     </div>
-                    <div class="flex justify-between text-lg font-bold mb-6">
-                        <span>总计</span>
-                        <span id="cartGrandTotal">¥0.00</span>
-                    </div>
-                    
-                    <button id="checkoutButton" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        前往结账
-                    </button>
+                    <h3 class="font-semibold text-gray-900 mb-2">结账流程</h3>
+                    <p class="text-sm text-gray-600">完整的模拟结账，表单验证</p>
                 </div>
             </div>
         </div>
-    </main>
 
-    <!-- 页脚 -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-shopping-bag text-white"></i>
-                        </div>
-                        <span class="text-xl font-bold">ShopDemo</span>
-                    </div>
-                    <p class="text-gray-400">高品质电商平台，为您提供最好的购物体验。</p>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">关于我们</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">联系我们</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">隐私政策</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">服务条款</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">客户服务</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">帮助中心</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">订单跟踪</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">退换货政策</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">常见问题</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">联系我们</h4>
-                    <ul class="space-y-2">
-                        <li class="text-gray-400"><i class="fas fa-envelope mr-2"></i> support@shopdemo.com</li>
-                        <li class="text-gray-400"><i class="fas fa-phone mr-2"></i> 400-123-4567</li>
-                        <li class="text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> 北京市朝阳区</li>
-                    </ul>
-                </div>
-            </div>
+        <!-- 项目文件 -->
+        <div class="bg-white rounded-xl p-6 shadow-sm mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">项目文件</h2>
             
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-                <p>&copy; 2024 ShopDemo. 这是一个UI/UX验证原型。</p>
-                <p class="text-sm mt-2">用于验证电商网站的设计概念和用户体验。</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script>
-        // 模拟商品数据
-        const products = [
-            {
-                id: 1,
-                name: '无线蓝牙耳机',
-                price: 299.00,
-                image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
-                category: '电子产品',
-                rating: 4.5,
-                description: '高音质无线蓝牙耳机，降噪功能',
-                badge: '热卖'
-            },
-            {
-                id: 2,
-                name: '运动跑步鞋',
-                price: 599.00,
-                image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop',
-                category: '服装鞋帽',
-                rating: 4.8,
-                description: '轻便舒适运动鞋，适合跑步健身',
-                badge: '新品'
-            },
-            {
-                id: 3,
-                name: '智能手表',
-                price: 1299.00,
-                image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
-                category: '电子产品',
-                rating: 4.7,
-                description: '多功能智能手表，健康监测',
-                badge: '推荐'
-            },
-            {
-                id: 4,
-                name: '陶瓷咖啡杯',
-                price: 89.00,
-                image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?w-400&h=400&fit=crop',
-                category: '家居用品',
-                rating: 4.3,
-                description: '高品质陶瓷杯，保温设计',
-                badge: null
-            },
-            {
-                id: 5,
-                name: '编程书籍',
-                price: 79.00,
-                image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=400&fit=crop',
-                category: '图书文具',
-                rating: 4.6,
-                description: '最新编程技术书籍',
-                badge: '畅销'
-            },
-            {
-                id: 6,
-                name: '无线鼠标',
-                price: 159.00,
-                image: 'https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=400&fit=crop',
-                category: '电子产品',
-                rating: 4.4,
-                description: '静音无线鼠标，长续航',
-                badge: null
-            },
-            {
-                id: 7,
-                name: '休闲T恤',
-                price: 129.00,
-                image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
-                category: '服装鞋帽',
-                rating: 4.2,
-                description: '纯棉舒适T恤，多种颜色',
-                badge: '特价'
-            },
-            {
-                id: 8,
-                name: '桌面台灯',
-                price: 199.00,
-                image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop',
-                category: '家居用品',
-                rating: 4.5,
-                description: '护眼LED台灯，多档调光',
-                badge: null
-            }
-        ];
-
-        // 购物车数据
-        let cart = [];
-        
-        // DOM元素
-        const productGrid = document.getElementById('productGrid');
-        const cartButton = document.getElementById('cartButton');
-        const cartModal = document.getElementById('cartModal');
-        const closeCart = document.getElementById('closeCart');
-        const cartItems = document.getElementById('cartItems');
-        const emptyCart = document.getElementById('emptyCart');
-        const cartCount = document.getElementById('cartCount');
-        const cartTotal = document.getElementById('cartTotal');
-        const cartGrandTotal = document.getElementById('cartGrandTotal');
-        const checkoutButton = document.getElementById('checkoutButton');
-        const searchInput = document.getElementById('searchInput');
-        
-        // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            renderProducts();
-            updateCartUI();
-            
-            // 事件监听
-            cartButton.addEventListener('click', openCart);
-            closeCart.addEventListener('click', closeCartModal);
-            checkoutButton.addEventListener('click', checkout);
-            searchInput.addEventListener('input', handleSearch);
-            
-            // 点击模态框外部关闭
-            cartModal.addEventListener('click', function(e) {
-                if (e.target === cartModal) {
-                    closeCartModal();
-                }
-            });
-            
-            // 键盘事件
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && !cartModal.classList.contains('hidden')) {
-                    closeCartModal();
-                }
-            });
-        });
-        
-        // 渲染商品
-        function renderProducts(filteredProducts = products) {
-            productGrid.innerHTML = '';
-            
-            filteredProducts.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card bg-white rounded-xl overflow-hidden';
-                productCard.innerHTML = `
-                    <div class="relative">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-                        ${product.badge ? `<div class="badge">${product.badge}</div>` : ''}
-                        <button class="absolute top-3 left-3 bg-white/80 hover:bg-white text-gray-800 w-8 h-8 rounded-full flex items-center justify-center transition" onclick="toggleFavorite(${product.id})">
-                            <i class="fas fa-heart"></i>
-                        </button>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-semibold text-gray-900">${product.name}</h3>
-                            <span class="text-blue-600 font-bold">¥${product.price.toFixed(2)}</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-3">${product.description}</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <div class="flex text-yellow-400">
-                                    ${getStarRating(product.rating)}
-                                </div>
-                                <span class="text-sm text-gray-500 ml-2">${product.rating}</span>
-                            </div>
-                            <span class="text-xs text-gray-500">${product.category}</span>
-                        </div>
-                        <button class="btn-primary w-full mt-4 py-2 rounded-lg font-medium" onclick="addToCart(${product.id})">
-                            <i class="fas fa-cart-plus mr-2"></i>加入购物车
-                        </button>
-                    </div>
-                `;
-                productGrid.appendChild(productCard);
-            });
-        }
-        
-        // 获取星级评分
-        function getStarRating(rating) {
-            let stars = '';
-            for (let i = 1; i <= 5; i++) {
-                if (i <= Math.floor(rating)) {
-                    stars += '<i class="fas fa-star"></i>';
-                } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
-                    stars += '<i class="fas fa-star-half-alt"></i>';
-                } else {
-                    stars += '<i class="far fa-star"></i>';
-                }
-            }
-            return stars;
-        }
-        
-        // 添加到购物车
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            
-            // 检查是否已在购物车
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    ...product,
-                    quantity: 1
-                });
-            }
-            
-            updateCartUI();
-            showNotification(`${product.name} 已添加到购物车`);
-        }
-        
-        // 更新购物车数量
-        function updateCartQuantity(productId, newQuantity) {
-            const item = cart.find(item => item.id === productId);
-            if (!item) return;
-            
-            if (newQuantity <= 0) {
-                removeFromCart(productId);
-            } else {
-                item.quantity = newQuantity;
-                updateCartUI();
-            }
-        }
-        
-        // 从购物车移除
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCartUI();
-            showNotification('商品已从购物车移除');
-        }
-        
-        // 更新购物车UI
-        function updateCartUI() {
-            // 更新购物车数量
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            
-            // 更新购物车总价
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotal.textContent = `¥${total.toFixed(2)}`;
-            cartGrandTotal.textContent = `¥${total.toFixed(2)}`;
-            
-            // 更新结账按钮状态
-            checkoutButton.disabled = cart.length === 0;
-            
-            // 更新购物车内容
-            renderCartItems();
-        }
-        
-        // 渲染购物车商品
-        function renderCartItems() {
-            if (cart.length === 0) {
-                emptyCart.classList.remove('hidden');
-                cartItems.innerHTML = '';
-                cartItems.appendChild(emptyCart);
-                return;
-            }
-            
-            emptyCart.classList.add('hidden');
-            cartItems.innerHTML = '';
-            
-            cart.forEach(item => {
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item bg-gray-50 rounded-lg p-4 mb-3';
-                cartItem.innerHTML = `
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div class="flex items-center">
-                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
-                        <div class="ml-4 flex-1">
-                            <h4 class="font-medium text-gray-900">${item.name}</h4>
-                            <p class="text-sm text-gray-600">¥${item.price.toFixed(2)}</p>
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-file-code text-blue-600"></i>
                         </div>
-                        <div class="flex items-center">
-                            <button class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-l" onclick="updateCartQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                            <span class="w-10 h-8 flex items-center justify-center border-t border-b border-gray-300">${item.quantity}</span>
-                            <button class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-r" onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                            <button class="ml-4 text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                        <div>
+                            <h4 class="font-medium text-gray-900">电商原型主文件</h4>
+                            <p class="text-sm text-gray-600">完整的前端实现，1600+行代码</p>
                         </div>
                     </div>
-                    <div class="mt-2 text-right">
-                        <span class="font-semibold">小计: ¥${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-        }
-        
-        // 打开购物车
-        function openCart() {
-            cartModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // 关闭购物车
-        function closeCartModal() {
-            cartModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // 结账
-        function checkout() {
-            if (cart.length === 0) return;
-            
-            // 模拟结账过程
-            showNotification('正在处理订单...', 'info');
-            
-            setTimeout(() => {
-                showNotification('订单提交成功！', 'success');
-                
-                // 清空购物车
-                cart = [];
-                updateCartUI();
-                closeCartModal();
-                
-                // 显示订单确认
-                setTimeout(() => {
-                    alert('🎉 订单确认！\n\n感谢您的购买。这是一个UI/UX验证原型，实际功能将在正式开发中实现。\n\n验证内容：\n✓ 购物车流程\n✓ 商品管理\n✓ 价格计算\n✓ 用户交互');
-                }, 500);
-            }, 1500);
-        }
-        
-        // 搜索功能
-        function handleSearch(e) {
-            const searchTerm = e.target.value.toLowerCase().trim();
-            
-            if (!searchTerm) {
-                renderProducts();
-                return;
-            }
-            
-            const filtered = products.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) ||
-                product.description.toLowerCase().includes(searchTerm) ||
-                product.category.toLowerCase().includes(searchTerm)
-            );
-            
-            renderProducts(filtered);
-            
-            // 显示搜索结果数量
-            if (searchTerm) {
-                const resultCount = document.createElement('div');
-                resultCount.className = 'col-span-full text-center py-4 text-gray-600';
-                resultCount.textContent = `找到 ${filtered.length} 个相关商品`;
-                productGrid.prepend(resultCount);
-            }
-        }
-        
-        // 收藏功能
-        function toggleFavorite(productId) {
-            const button = event.currentTarget;
-            const icon = button.querySelector('i');
-            
-            if (icon.classList.contains('fas')) {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
-                showNotification('已取消收藏');
-            } else {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-                showNotification('已添加到收藏');
-            }
-            
-            // 添加动画效果
-            button.style.transform = 'scale(1.2)';
-            setTimeout(() => {
-                button.style.transform = 'scale(1)';
-            }, 200);
-        }
-        
-        // 显示通知
-        function showNotification(message, type = 'success') {
-            // 移除现有通知
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) {
-                existingNotification.remove();
-            }
-            
-            // 创建新通知
-            const notification = document.createElement('div');
-            notification.className = `notification fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transform transition-transform duration-300 ${
-                type === 'success' ? 'bg-green-500 text-white' : 
-                type === 'error' ? 'bg-red-500 text-white' : 
-                'bg-blue-500 text-white'
-            }`;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            // 显示动画
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 10);
-            
-            // 3秒后自动移除
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 3000);
-        }
-        
-        // 全局函数（用于HTML onclick）
-        window.addToCart = addToCart;
-        window.updateCartQuantity = updateCartQuantity;
-        window.removeFromCart = removeFromCart;
-        window.toggleFavorite = toggleFavorite;
-        
-        // 添加一些演示交互
-        setTimeout(() => {
-            // 自动添加一个商品到购物车作为演示
-            if (cart.length === 0) {
-                addToCart(1); // 添加第一个商品
-            }
-        }, 1000);
-        
-        // 添加页面滚动效果
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // 添加加载状态模拟
-        function simulateLoading() {
-            const loading = document.createElement('div');
-            loading.className = 'fixed inset-0 bg-white/80 flex items-center justify-center z-50';
-            loading.innerHTML = `
-                <div class="text-center">
-                    <div class="loading-spinner mx-auto mb-4"></div>
-                    <p class="text-gray-700">加载中...</p>
+                    <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/" 
+                       class="text-blue-600 hover:text-blue-800 font-medium">
+                        访问 <i class="fas fa-external-link-alt ml-1"></i>
+                    </a>
                 </div>
-            `;
+                
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-file-alt text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-900">验证报告模板</h4>
+                            <p class="text-sm text-gray-600">专业验证报告模板和格式</p>
+                        </div>
+                    </div>
+                    <a href="validation-report-template.md" 
+                       class="text-green-600 hover:text-green-800 font-medium">
+                        下载 <i class="fas fa-download ml-1"></i>
+                    </a>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-terminal text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-900">一键部署脚本</h4>
+                            <p class="text-sm text-gray-600">支持GitHub Pages、Vercel、Netlify</p>
+                        </div>
+                    </div>
+                    <a href="deploy.sh" 
+                       class="text-purple-600 hover:text-purple-800 font-medium">
+                        查看 <i class="fas fa-code ml-1"></i>
+                    </a>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-book text-orange-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-900">项目文档</h4>
+                            <p class="text-sm text-gray-600">详细的使用说明和指南</p>
+                        </div>
+                    </div>
+                    <a href="README.md" 
+                       class="text-orange-600 hover:text-orange-800 font-medium">
+                        阅读 <i class="fas fa-book-open ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技术栈 -->
+        <div class="bg-gray-900 text-white rounded-xl p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">技术栈</h2>
             
-            document.body.appendChild(loading);
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">HTML5</div>
+                    <div class="text-gray-300 text-sm">语义化标记</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">CSS3</div>
+                    <div class="text-gray-300 text-sm">现代样式布局</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">JavaScript</div>
+                    <div class="text-gray-300 text-sm">ES6+交互逻辑</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">Tailwind</div>
+                    <div class="text-gray-300 text-sm">实用优先CSS框架</div>
+                </div>
+            </div>
             
-            setTimeout(() => {
-                loading.remove();
-            }, 1000);
-        }
-        
-        // 页面加载完成后的效果
-        window.addEventListener('load', () => {
-            // 添加一些初始动画
-            document.querySelectorAll('.product-card').forEach((card, index) => {
+            <div class="mt-6 p-4 bg-gray-800 rounded-lg">
+                <h4 class="font-semibold mb-2">🎯 设计目标</h4>
+                <p class="text-gray-300 text-sm">
+                    这个原型专注于UI/UX验证，无后端依赖，纯前端实现。
+                    目标是验证设计概念和用户流程，降低正式开发风险。
+                </p>
+            </div>
+        </div>
+
+        <!-- 快速链接 -->
+        <div class="flex flex-wrap gap-4 justify-center">
+            <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/" 
+               class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 inline-flex items-center">
+                <i class="fas fa-play-circle mr-2"></i>运行电商原型
+            </a>
+            
+            <a href="../ui-validation-tools/" 
+               class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 inline-flex items-center">
+                <i class="fas fa-clipboard-check mr-2"></i>使用验证工具
+            </a>
+            
+            <a href="https://github.com/tengfeizhao1219/Tengfei-s-Workstation" 
+               class="px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 inline-flex items-center">
+                <i class="fab fa-github mr-2"></i>查看GitHub仓库
+            </a>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="mt-12 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
+            <p>电商原型项目 - Tengfei's Workstation</p>
+            <p class="mt-2">UI/UX验证原型 | 降低开发风险 | 提高产品质量</p>
+            <p class="mt-2">
+                <a href="https://tengfeizhao1219.github.io/Tengfei-s-Workstation/" 
+                   class="text-blue-600 hover:text-blue-800 mr-4">
+                    <i class="fas fa-home mr-1"></i>主页
+                </a>
+                <a href="../ui-validation-tools/" 
+                   class="text-green-600 hover:text-green-800 mr-4">
+                    <i class="fas fa-tools mr-1"></i>验证工具
+                </a>
+                <a href="https://github.com/tengfeizhao1219/Tengfei-s-Workstation" 
+                   class="text-gray-600 hover:text-gray-800">
+                    <i class="fab fa-github mr-1"></i>源代码
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 添加交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 特性卡片动画
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';
                 
@@ -822,16 +330,18 @@
                     card.style.transform = 'translateY(0)';
                 }, index * 100);
             });
-        });
-        
-        // 添加视差滚动效果
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const banner = document.querySelector('section#home');
-            if (banner) {
-                banner.style.transform = `translateY(${scrolled * 0.1}px)`;
-            }
-        });
-    </script>
-</body>
-</html>
+            
+            // 按钮点击效果
+            const buttons = document.querySelectorAll('a[href]');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('http')) {
+                        return; // 外部链接不处理
+                    }
+                    
+                    const button = this;
+                    const originalHTML = button.innerHTML;
+                    
+                    // 添加加载效果
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>加载中...';
+                    button.classList.add('opacity
