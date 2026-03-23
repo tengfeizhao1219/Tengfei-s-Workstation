@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能网页总结</title>
+    <link rel="stylesheet" href="../../styles/popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-magic"></i> 智能网页总结</h1>
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot active"></span>
+                    <span class="status-text">就绪</span>
+                </div>
+            </div>
+            <div class="header-subtitle">
+                一键生成网页摘要，提升阅读效率
+            </div>
+        </header>
+
+        <!-- 主要内容 -->
+        <main class="main">
+            <!-- 当前页面信息 -->
+            <section class="section current-page">
+                <h3><i class="fas fa-globe"></i> 当前页面</h3>
+                <div class="page-info">
+                    <div class="page-title" id="pageTitle">正在获取页面信息...</div>
+                    <div class="page-url" id="pageUrl"></div>
+                    <div class="page-stats">
+                        <span class="stat"><i class="fas fa-file-alt"></i> <span id="wordCount">0</span> 字</span>
+                        <span class="stat"><i class="fas fa-clock"></i> <span id="readingTime">0</span> 分钟</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 操作按钮 -->
+            <section class="section actions">
+                <div class="button-group">
+                    <button class="btn btn-primary btn-large" id="summarizeBtn">
+                        <i class="fas fa-robot"></i>
+                        <span>生成智能摘要</span>
+                    </button>
+                    <button class="btn btn-secondary" id="quickSummaryBtn">
+                        <i class="fas fa-bolt"></i>
+                        快速总结
+                    </button>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-outline" id="viewHistoryBtn">
+                        <i class="fas fa-history"></i>
+                        历史记录
+                    </button>
+                    <button class="btn btn-outline" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                        设置
+                    </button>
+                    <button class="btn btn-outline" id="helpBtn">
+                        <i class="fas fa-question-circle"></i>
+                        帮助
+                    </button>
+                </div>
+            </section>
+
+            <!-- 摘要结果 -->
+            <section class="section summary-result" id="summaryResult" style="display: none;">
+                <div class="section-header">
+                    <h3><i class="fas fa-file-contract"></i> 摘要结果</h3>
+                    <div class="summary-meta">
+                        <span class="badge" id="summaryLength">中等</span>
+                        <span class="badge" id="summaryTime">刚刚</span>
+                    </div>
+                </div>
+                <div class="summary-content" id="summaryContent">
+                    <!-- 摘要内容将在这里显示 -->
+                </div>
+                <div class="summary-actions">
+                    <button class="btn btn-action" id="copySummaryBtn" title="复制摘要">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="btn btn-action" id="saveSummaryBtn" title="保存到本地">
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button class="btn btn-action" id="exportSummaryBtn" title="导出为文件">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn btn-action" id="shareSummaryBtn" title="分享">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                    <button class="btn btn-action" id="refreshSummaryBtn" title="重新生成">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 关键要点 -->
+            <section class="section key-points" id="keyPoints" style="display: none;">
+                <h3><i class="fas fa-bullseye"></i> 关键要点</h3>
+                <div class="points-list" id="pointsList">
+                    <!-- 关键要点将在这里显示 -->
+                </div>
+            </section>
+
+            <!-- 加载状态 -->
+            <section class="section loading" id="loading" style="display: none;">
+                <div class="loading-content">
+                    <div class="spinner"></div>
+                    <div class="loading-text">正在分析页面内容，请稍候...</div>
+                    <div class="loading-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">0%</div>
+                    </div>
+                    <div class="loading-steps">
+                        <div class="step active"><i class="fas fa-check"></i> 获取页面内容</div>
+                        <div class="step"><i class="fas fa-spinner"></i> 分析文本结构</div>
+                        <div class="step"><i class="fas fa-spinner"></

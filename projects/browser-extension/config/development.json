@@ -1,0 +1,26 @@
+{
+  "environment": "development",
+  "debug": true,
+  "api": {
+    "baseUrl": "http://localhost:3000/api",
+    "timeout": 30000,
+    "retryAttempts": 3
+  },
+  "features": {
+    "aiSummary": true,
+    "history": true,
+    "export": true,
+    "sidebar": true,
+    "contextMenu": true
+  },
+  "logging": {
+    "level": "debug",
+    "console": true,
+    "file": false
+  },
+  "storage": {
+    "maxHistoryItems": 50,
+    "autoSave": true,
+    "backupInterval": 3600000
+  }
+}
